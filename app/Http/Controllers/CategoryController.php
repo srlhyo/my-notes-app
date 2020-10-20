@@ -39,7 +39,10 @@ class CategoryController extends Controller
     {
         Category::create($request->validated());
 
-        return redirect(route('category.list'))->with('status', 'Category Saved');
+        return redirect(route('category.list'))->with('status', [
+            'message' => 'Category Saved',
+            'class-name' => 'success'
+        ]);
     }
 
     /**
@@ -75,7 +78,10 @@ class CategoryController extends Controller
     {
         $category->update($request->validated());
 
-        return redirect(route('category.list'))->with('status', 'Category Updated');
+        return redirect(route('category.list'))->with('status', [
+            'message' => 'Category Updated',
+            'class-name' => 'warning'
+        ]);
     }
 
     /**
@@ -88,6 +94,9 @@ class CategoryController extends Controller
     {
         $category->destroy($category->id);
 
-        return redirect(route('category.list'))->with('status', 'Category Deleted');
+        return redirect(route('category.list'))->with('status', [
+            'message' => 'Category Deleted',
+            'class-name' => 'danger'
+        ]);
     }
 }

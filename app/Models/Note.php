@@ -11,6 +11,9 @@ class Note extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+    protected $attributes = [
+        'content' => ''
+    ];
 
     public function categories() {
         return $this->belongsToMany('App\Models\Category', 'categories_notes');

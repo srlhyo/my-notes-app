@@ -49,6 +49,9 @@ class NoteController extends Controller
 
     public function store(NoteRequest $request)
     {
+        // dd($request->validated([
+        //     'title' => 'required'
+        // ]));
         $validated = $request->validated();
 
         $note = Note::where('id', request('note_id'))
@@ -59,9 +62,15 @@ class NoteController extends Controller
             $note = new Note();
         }
 
+        // if (!isset($validated['content'])) {
+        //     $validated['content'] = '';
+        // }
+        // hack is a bad solution
+
         $validated['user_id'] = Auth::id();
         $note->fill($validated);
         $note->save();
+
         if(!isset($validated['categories'])) {
             $validated['categories'] = [];
         }

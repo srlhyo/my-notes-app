@@ -7,8 +7,14 @@
             <div class="card">
                 <div class="card-header">{{ __('Categories') }}<a href="{{ route('category.create') }}" class="float-right btn btn-primary btn-sm">{{ __('Add Categories') }}</a></div>
                 <div class="card-body">
-
-                    @switch(session('status'))
+                    @if (session('status'))
+                        <div class="alert alert-{{ session('status')['class-name'] }}" role="alert">
+                            {{ session('status')['message'] }}
+                        </div>
+                        {{-- $array = ['name', 'hello'];
+                        $array[1]; --}}
+                    @endif
+                    {{-- @switch(session('status'))
                         @case('Category Saved')
                             <div class="alert alert-success" role="alert">
                                 {{ session('status') }}
@@ -26,7 +32,7 @@
                             @break
                         @default
 
-                    @endswitch
+                    @endswitch --}}
 
                     <ul class="list-group list-group-flush">
                         @foreach ($categories as $category)

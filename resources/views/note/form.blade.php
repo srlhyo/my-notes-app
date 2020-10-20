@@ -31,11 +31,11 @@
                             <div class="input-group-prepend">
                                 @foreach ($allCategories as $category)
                                     <div class="input-group-text">
+                                        <input type="checkbox" name="categories[]" value="{{ $category->id }}" aria-label="{{ $category->name }}"
                                         @if (isset($categories) && $categories->contains($category))
-                                            <input type="checkbox" name="categories[]" value="{{ $category->id }}" aria-label="{{ $category->name }}" checked>&nbsp;{{ $category->name }}
-                                        @else
-                                            <input type="checkbox" name="categories[]" value="{{ $category->id }}" aria-label="{{ $category->name }}">&nbsp;{{ $category->name }}
+                                            checked
                                         @endif
+                                        >&nbsp;{{ $category->name }}
                                     </div>
                                 @endforeach
                             </div>
