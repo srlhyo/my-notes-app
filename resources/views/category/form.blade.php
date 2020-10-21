@@ -9,17 +9,20 @@
 
             <div class="card">
 
-                <div class="card-header">{{ __('Create Category') }}</div>
+                <div class="card-header">{{ __(isset($category) ? 'Edit Category' : 'Create Category') }}</div>
 
                 <div class="card-body">
 
-                    <form action="{{ route('category.store') }}" method="post">
+                    <form action="{{ isset($category ) ? route('categories.update', $category->id) : route('categories.store') }}" method="post">
+                        @isset($category)
+                            @method('PUT')
+                        @endisset
+
                         @csrf
 
                         <div class="form-group">
                             <label for="name">{{ __('Name') }}*</label>
-                            <input type="text" name="name" id="name" placeholder="Name" class="form-control @error('name') is-invalid @enderror">
-
+                            <input type="text" name="name" id="name" placeholder="Name" class="form-control @error('name') is-invalid @enderror" value="{{ isset($category) ? $category->name : '' }}">
                             @error('name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

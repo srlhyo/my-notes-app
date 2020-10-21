@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\NoteRequest;
-use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Note;
-use Auth;
-use Illuminate\Http\Request;
+use App\Http\Requests\NoteRequest;
 
 class NoteController extends Controller
 {
     public function overview()
     {
         $notes = Note::where('user_id', Auth::id())->get();
-        // dd($notes->catogories);
         return view(
             'note.list',
             compact(
@@ -26,9 +23,6 @@ class NoteController extends Controller
     {
         return view(
             'note.form',
-            ['allCategories' => Category::all()],
-            ['categories' => null],
-
         );
     }
 
@@ -38,20 +32,14 @@ class NoteController extends Controller
             ->where('user_id', Auth::id())
             ->firstOrFail();
 
-            $categories = $note->categories;
-            $allCategories = Category::all();
-
         return view(
             'note.form',
-            compact('note', 'categories', 'allCategories')
+            compact('note')
         );
     }
 
     public function store(NoteRequest $request)
     {
-        // dd($request->validated([
-        //     'title' => 'required'
-        // ]));
         $validated = $request->validated();
 
         $note = Note::where('id', request('note_id'))
@@ -61,11 +49,6 @@ class NoteController extends Controller
         if (!$note) {
             $note = new Note();
         }
-
-        // if (!isset($validated['content'])) {
-        //     $validated['content'] = '';
-        // }
-        // hack is a bad solution
 
         $validated['user_id'] = Auth::id();
         $note->fill($validated);

@@ -29,12 +29,14 @@
 
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                @foreach ($allCategories as $category)
+                                @foreach (auth::user()->categories as $category)
                                     <div class="input-group-text">
-                                        <input type="checkbox" name="categories[]" value="{{ $category->id }}" aria-label="{{ $category->name }}"
-                                        @if (isset($categories) && $categories->contains($category))
-                                            checked
-                                        @endif
+                                        <input type="checkbox" name="categories[]" value="{{ $category->id }}"
+                                        @isset($note)
+                                            @if ($note->categories->contains($category))
+                                                checked
+                                            @endif
+                                        @endisset
                                         >&nbsp;{{ $category->name }}
                                     </div>
                                 @endforeach

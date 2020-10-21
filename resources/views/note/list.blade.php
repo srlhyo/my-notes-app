@@ -22,7 +22,7 @@
             </div>
             <div class="card">
                 <div class="card-body">
-                    <a href="{{ route('category.list') }}" class="p-2 bg-light text-dark font-weight-bold">{{ __('View categories') }}</a>
+                    <a href="{{ route('categories.index') }}" class="p-2 bg-light text-dark font-weight-bold">{{ __('View categories') }}</a>
                 </div>
             </div>
         </div>

@@ -5,41 +5,20 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Categories') }}<a href="{{ route('category.create') }}" class="float-right btn btn-primary btn-sm">{{ __('Add Categories') }}</a></div>
+                <div class="card-header">{{ __('Categories') }}<a href="{{ route('categories.create') }}" class="float-right btn btn-primary btn-sm">{{ __('Add Categories') }}</a></div>
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-{{ session('status')['class-name'] }}" role="alert">
                             {{ session('status')['message'] }}
                         </div>
-                        {{-- $array = ['name', 'hello'];
-                        $array[1]; --}}
                     @endif
-                    {{-- @switch(session('status'))
-                        @case('Category Saved')
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                            @break
-                        @case('Category Updated')
-                            <div class="alert alert-warning" role="alert">
-                                {{ session('status') }}
-                            </div>
-                            @break
-                        @case('Category Deleted')
-                            <div class="alert alert-danger" role="alert">
-                                {{ session('status') }}
-                            </div>
-                            @break
-                        @default
-
-                    @endswitch --}}
 
                     <ul class="list-group list-group-flush">
-                        @foreach ($categories as $category)
+                        @foreach (auth::user()->categories as $category)
                             <li class="list-group-item">
-                                <a href="{{ route('category.edit', $category->id) }}">{{ $category->name }}</a>
+                                <a href="{{ route('categories.edit', $category->id) }}">{{ $category->name }}</a>
 
-                                <form class="float-right" action="{{ route('category.destroy', $category->id) }}" method="post">
+                                <form class="float-right" action="{{ route('categories.destroy', $category->id) }}" method="post">
                                     @method('Delete')
                                     @csrf
 

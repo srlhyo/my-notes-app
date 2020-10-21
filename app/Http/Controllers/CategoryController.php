@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
 use App\Http\Requests\CategoryRequest;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -15,8 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-        return view('category.list', compact('categories'));
+        return view('category.list');
     }
 
     /**
@@ -24,9 +23,9 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Category $category)
+    public function create()
     {
-        return view('category.form', compact('category') );
+        return view('category.form');
     }
 
     /**
@@ -37,9 +36,12 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        Category::create($request->validated());
+        $validated = $request->validated();
+        $validated['user_id'] = Auth::id();
 
-        return redirect(route('category.list'))->with('status', [
+        Category::create($validated);
+
+        return redirect(route('categories.index'))->with('status', [
             'message' => 'Category Saved',
             'class-name' => 'success'
         ]);
@@ -64,7 +66,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('category.edit-form', compact('category'));
+        return view('category.form', compact('category'));
     }
 
     /**
@@ -78,7 +80,7 @@ class CategoryController extends Controller
     {
         $category->update($request->validated());
 
-        return redirect(route('category.list'))->with('status', [
+        return redirect(route('categories.index'))->with('status', [
             'message' => 'Category Updated',
             'class-name' => 'warning'
         ]);
@@ -94,7 +96,7 @@ class CategoryController extends Controller
     {
         $category->destroy($category->id);
 
-        return redirect(route('category.list'))->with('status', [
+        return redirect(route('categories.index'))->with('status', [
             'message' => 'Category Deleted',
             'class-name' => 'danger'
         ]);

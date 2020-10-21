@@ -15,15 +15,23 @@ class CategorySeeder extends Seeder
     public function run()
     {
         Category::create([
-            'name'     => 'Loving letter' ,
+            'user_id'   => 1,
+            'name'     => 'Loving letter'
         ]);
 
         Category::create([
-            'name'     => 'Action lego',
+            'user_id'   => 1,
+            'name'     => 'Action lego'
         ]);
 
         Category::create([
-            'name'     => 'Movie',
+            'user_id'   => 1,
+            'name'     => 'Movie'
+        ]);
+
+        Category::create([
+            'user_id'   => 2,
+            'name'     => 'Loving letter for test user 2'
         ]);
     }
 }
